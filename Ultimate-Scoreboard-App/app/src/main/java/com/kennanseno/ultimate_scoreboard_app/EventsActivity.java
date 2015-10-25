@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,9 +25,7 @@ public class EventsActivity extends Activity {
     private static final String TAG_EVENT_END_DATE = "end_date";
     private static final String TAG_EVENT_ORGANIZER = "user_id";
 
-
     JSONObject data = null;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +51,7 @@ public class EventsActivity extends Activity {
             JSONParser jParser = new JSONParser();
 
             // Getting JSON from URL
-
-            JSONArray json = jParser.getJSONFromUrl(url);
-            return json;
+            return jParser.getJSONFromUrl(url);
         }
         @Override
         protected void onPostExecute(JSONArray json) {

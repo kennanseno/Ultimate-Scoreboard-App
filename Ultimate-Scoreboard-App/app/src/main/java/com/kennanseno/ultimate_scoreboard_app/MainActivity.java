@@ -5,20 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-
-import org.json.JSONObject;
 
 public class MainActivity extends Activity {
 
@@ -38,7 +32,7 @@ public class MainActivity extends Activity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Profile p = Profile.getCurrentProfile();
-                Log.d("Result", "ID: " + loginResult.getAccessToken().getUserId() + " Name: " + p.getName());
+                Log.d("Test", "ID: " + loginResult.getAccessToken().getUserId() + " Name: " + p.getName());
 
                 Intent intent = new Intent(MainActivity.this, EventsActivity.class);
                 startActivity(intent);
@@ -47,13 +41,13 @@ public class MainActivity extends Activity {
             @Override
             public void onCancel() {
                 Toast.makeText(MainActivity.this, "Cancel!",Toast.LENGTH_LONG).show();
-                Log.d("Result","Cancel");
+                Log.d("Test","Cancel");
             }
 
             @Override
             public void onError(FacebookException e) {
                 Toast.makeText(MainActivity.this, "Error!",Toast.LENGTH_LONG).show();
-                Log.d("Result","Error");
+                Log.d("Test","Error");
 
             }
 
