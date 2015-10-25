@@ -6,18 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class EventsActivity extends Activity {
@@ -25,7 +16,7 @@ public class EventsActivity extends Activity {
     ArrayList<Event> eventList = new ArrayList<>();
 
     //URL to get JSON Array
-    private static String url = "kennanseno.com/ultimate-app/getEvents.php";
+    private static String url = "http://kennanseno.com/ultimate-app/getEvents.php";
 
     //JSON Node Names
     private static final String TAG_EVENT_ID = "event_id";
@@ -36,7 +27,7 @@ public class EventsActivity extends Activity {
     private static final String TAG_EVENT_ORGANIZER = "user_id";
 
 
-    JSONArray data = null;
+    JSONObject data = null;
 
 
     @Override
@@ -50,6 +41,9 @@ public class EventsActivity extends Activity {
         ListView eventListView = (ListView)findViewById(R.id.eventListView);
         eventListView.setAdapter(eventAdapter);
 
+        //uncomment to test eventList value
+        //Log.d("Test", eventList.get(0).getName());
+
     }
 
 
@@ -60,28 +54,33 @@ public class EventsActivity extends Activity {
             JSONParser jParser = new JSONParser();
 
             // Getting JSON from URL
-            return jParser.getJSONFromUrl(url);
+
+            JSONArray json = jParser.getJSONFromUrl(url);
+            return json;
         }
         @Override
         protected void onPostExecute(JSONArray json) {
 
             try {
-                // Getting JSON Array
-                data = json.getJSONArray(0);
 
                 // Storing  JSON item in a Variable
-                for(int count = 0; count < data.length(); count++){
-                    JSONObject j = data.getJSONObject(count);
+                for(int count = 0; count < json.length(); count++){
+                    data = json.optJSONObject(count);
+
                     Event singleEvent =  new Event();
 
-                    singleEvent.setId(j.getInt(TAG_EVENT_ID));
-                    singleEvent.setName(j.getString(TAG_EVENT_NAME));
-                    singleEvent.setVenue(j.getString(TAG_EVENT_VENUE));
-                    singleEvent.setStartDate(j.getString(TAG_EVENT_START_DATE));
-                    singleEvent.setEndDate(j.getString(TAG_EVENT_END_DATE));
-                    singleEvent.setEventOrganizer(j.getInt(TAG_EVENT_ORGANIZER));
+                    singleEvent.setId(data.getInt(TAG_EVENT_ID));
+                    singleEvent.setName(data.getString(TAG_EVENT_NAME));
+                    singleEvent.setVenue(data.getString(TAG_EVENT_VENUE));
+                    singleEvent.setStartDate(data.getString(TAG_EVENT_START_DATE));
+                    singleEvent.setEndDate(data.getString(TAG_EVENT_END_DATE));
+                    singleEvent.setEventOrganizer(data.getInt(TAG_EVENT_ORGANIZER));
+                    Log.d("Test", "Event ID: " + singleEvent.getId() + " Name: " + singleEvent.getName() + " Venue: " + singleEvent.getVenue() + " Start Date: " + singleEvent.getStartDate() + " End Date: " + singleEvent.getEndDate() + " Organizer Id: " + singleEvent.getEventOrganizer());
 
                     eventList.add(singleEvent);
+                    Log.d("Test", eventList.get(count).getName());
+                    // inside the for loop the is seems the singleEvent gets added into the eventList
+                    //but when I call it the event list in the onCreate method, it's saying that it is empty.
                 }
 
             } catch (JSONException e) {
