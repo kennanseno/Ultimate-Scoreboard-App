@@ -24,87 +24,71 @@ public class EventsActivity extends Activity {
 
     ArrayList<Event> eventList = new ArrayList<>();
 
+    //URL to get JSON Array
+    private static String url = "kennanseno.com/ultimate-app/getEvents.php";
+
+    //JSON Node Names
+    private static final String TAG_EVENT_ID = "event_id";
+    private static final String TAG_EVENT_NAME = "event_name";
+    private static final String TAG_EVENT_VENUE = "venue";
+    private static final String TAG_EVENT_START_DATE = "start_date";
+    private static final String TAG_EVENT_END_DATE = "end_date";
+    private static final String TAG_EVENT_ORGANIZER = "user_id";
+
+
+    JSONArray data = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_layout);
 
-        new AsyncGetEventData().execute("kennanseno.com/ultimate-app/getEvents.php");
+        new JSONParse().execute();
+
+        EventsAdapter eventAdapter = new EventsAdapter(this, eventList);
+        ListView eventListView = (ListView)findViewById(R.id.eventListView);
+        eventListView.setAdapter(eventAdapter);
+
     }
 
-    //Downloading data asynchronously
-    class AsyncGetEventData extends AsyncTask<String, JSONArray, Integer> {
+
+    private class JSONParse extends AsyncTask<String, String, JSONArray> {
 
         @Override
-        protected Integer doInBackground(String... url) {
-            Integer result = 0;
+        protected JSONArray doInBackground(String... args) {
+            JSONParser jParser = new JSONParser();
+
+            // Getting JSON from URL
+            return jParser.getJSONFromUrl(url);
+        }
+        @Override
+        protected void onPostExecute(JSONArray json) {
+
             try {
-                // Create Apache HttpClient
-                HttpClient httpclient = new DefaultHttpClient();
-                HttpResponse httpResponse = httpclient.execute(new HttpGet(url[0]));
-                int statusCode = httpResponse.getStatusLine().getStatusCode();
-                Log.d("Test", "" + statusCode);
-                // 200 represents HTTP OK
-                if (statusCode == 200) {
-                    String response = streamToString(httpResponse.getEntity().getContent());
-                    parseResult(response);
-                    result = 1; // Successful
-                } else {
-                    result = 0; //"Failed
+                // Getting JSON Array
+                data = json.getJSONArray(0);
+
+                // Storing  JSON item in a Variable
+                for(int count = 0; count < data.length(); count++){
+                    JSONObject j = data.getJSONObject(count);
+                    Event singleEvent =  new Event();
+
+                    singleEvent.setId(j.getInt(TAG_EVENT_ID));
+                    singleEvent.setName(j.getString(TAG_EVENT_NAME));
+                    singleEvent.setVenue(j.getString(TAG_EVENT_VENUE));
+                    singleEvent.setStartDate(j.getString(TAG_EVENT_START_DATE));
+                    singleEvent.setEndDate(j.getString(TAG_EVENT_END_DATE));
+                    singleEvent.setEventOrganizer(j.getInt(TAG_EVENT_ORGANIZER));
+
+                    eventList.add(singleEvent);
                 }
-//                String response = streamToString(httpResponse.getEntity().getContent());
-//                parseResult(response);
-//                result = 1;
 
-            } catch (Exception e) {
-                // Log.d(TAG, e.getLocalizedMessage());
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            //result = 1;
-
-        }
-
-        @Override
-        protected void onPostExecute(Integer result) {
-
-            EventsAdapter eventAdapter = new EventsAdapter(getApplicationContext(), eventList);
-            final ListView kennanListView = (ListView)findViewById(R.id.eventListView);
-            kennanListView.setAdapter(eventAdapter);
 
         }
     }
 
-    public String streamToString(InputStream stream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
-        String line;
-        String result = "";
-        while ((line = bufferedReader.readLine()) != null) {
-            result += line;
-        }
-
-        return result;
-    }
-
-    private void parseResult(String result) {
-        try {
-
-            JSONArray jsonArray = new JSONArray(result);
-
-            for (int i = 0; i < jsonArray.length(); i++) {
-
-                JSONObject post = jsonArray.optJSONObject(i);
-
-                Event event = new Event();
-
-                event.setId(Integer.parseInt(post.optString("event_id")));
-                event.setName(post.optString("event_name"));
-                event.setVenue(post.optString("venue"));
-                event.setStartDate(post.optString("start_date"));
-                event.setEndDate(post.optString("end_date"));
-
-                eventList.add(event);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 }
