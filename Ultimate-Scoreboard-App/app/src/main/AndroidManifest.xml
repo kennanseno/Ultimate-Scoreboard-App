@@ -28,6 +28,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity android:name=".EventsActivity" >
         </activity>
+        <activity android:name=".ScheduleActivity" >
+        </activity>
     </application>
 
 </manifest>
