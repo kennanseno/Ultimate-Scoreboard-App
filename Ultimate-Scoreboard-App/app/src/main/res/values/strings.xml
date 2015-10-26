@@ -5,4 +5,15 @@
     <string name="start_date_text">Start Date</string>
     <string name="event_venue_text">Venue</string>
     <string name="event_end_date_text">End Date</string>
+    <string name="club1_name_text">Club 1</string>
+    <string name="club2_name_text">Club 2</string>
+    <string name="score_divider">-</string>
+    <string name="club1_score_text">10</string>
+    <string name="club2_score_text">10</string>
+    <string name="start_time_text">00:00</string>
+    <string name="end_time_text">00:00</string>
+    <string name="time_divider_text">-</string>
+    <string name="club1_spirit_score_text">4</string>
+    <string name="club2_spirit_score_text">4</string>
+    <string name="schedule_day_text">Day 1</string>
 </resources>

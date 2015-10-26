@@ -1,9 +1,12 @@
 package com.kennanseno.ultimate_scoreboard_app;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -11,23 +14,26 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
+import static android.app.ActivityOptions.*;
+
 public class EventsActivity extends Activity {
 
     //URL to get JSON Array
-    private static String url = "http://kennanseno.com/ultimate-app/getEvents.php";
+    private String url = "http://kennanseno.com/ultimate-app/getEvents.php";
 
     //JSON Node Names
-    private static final String TAG_EVENT_ID = "event_id";
-    private static final String TAG_EVENT_NAME = "event_name";
-    private static final String TAG_EVENT_VENUE = "venue";
-    private static final String TAG_EVENT_START_DATE = "start_date";
-    private static final String TAG_EVENT_END_DATE = "end_date";
-    private static final String TAG_EVENT_ORGANIZER = "user_id";
+    private final String TAG_EVENT_ID = "event_id";
+    private final String TAG_EVENT_NAME = "event_name";
+    private final String TAG_EVENT_VENUE = "venue";
+    private final String TAG_EVENT_START_DATE = "start_date";
+    private final String TAG_EVENT_END_DATE = "end_date";
+    private final String TAG_EVENT_ORGANIZER = "user_id";
 
     JSONObject data = null;
 
     ListView eventListView;
     EventsAdapter eventAdapter;
+    ArrayList<Event> eventList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +41,14 @@ public class EventsActivity extends Activity {
         setContentView(R.layout.event_layout);
 
         new JSONParse().execute();
+
+        //TODO transition animation between activities
     }
 
     private class JSONParse extends AsyncTask<String, String, ArrayList<Event>>{
 
         @Override
         protected ArrayList doInBackground(String... args) {
-
-            ArrayList<Event> eventList = new ArrayList<>();
 
             try {
 
@@ -75,12 +81,21 @@ public class EventsActivity extends Activity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<Event> events) {
+        protected void onPostExecute(final ArrayList<Event> events) {
 
             eventAdapter = new EventsAdapter(EventsActivity.this, events);
             eventListView = (ListView)findViewById(R.id.eventListView);
             eventListView.setAdapter(eventAdapter);
 
+            eventListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String eventId = Integer.toString(events.get(position).getId());
+                    Intent intent = new Intent(EventsActivity.this, ScheduleActivity.class);
+                    intent.putExtra("eventId", eventId);
+                    startActivity(intent);
+                }
+            });
         }
     }
 
