@@ -5,14 +5,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class EventsActivity extends Activity {
-
-    ArrayList<Event> eventList = new ArrayList<>();
 
     //URL to get JSON Array
     private static String url = "http://kennanseno.com/ultimate-app/getEvents.php";
@@ -27,42 +26,35 @@ public class EventsActivity extends Activity {
 
     JSONObject data = null;
 
+    ListView eventListView;
+    EventsAdapter eventAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_layout);
 
         new JSONParse().execute();
-
-        EventsAdapter eventAdapter = new EventsAdapter(this, eventList);
-        ListView eventListView = (ListView)findViewById(R.id.eventListView);
-        eventListView.setAdapter(eventAdapter);
-
-        //uncomment to test eventList value
-        //Log.d("Test", eventList.get(0).getName());
-
     }
 
-
-    private class JSONParse extends AsyncTask<String, String, JSONArray> {
+    private class JSONParse extends AsyncTask<String, String, ArrayList<Event>>{
 
         @Override
-        protected JSONArray doInBackground(String... args) {
-            JSONParser jParser = new JSONParser();
+        protected ArrayList doInBackground(String... args) {
 
-            // Getting JSON from URL
-            return jParser.getJSONFromUrl(url);
-        }
-        @Override
-        protected void onPostExecute(JSONArray json) {
+            ArrayList<Event> eventList = new ArrayList<>();
 
             try {
 
-                // Storing  JSON item in a Variable
-                for(int count = 0; count < json.length(); count++){
-                    data = json.optJSONObject(count);
+                JSONParser jParser = new JSONParser();
 
-                    Event singleEvent =  new Event();
+                // Getting JSON from URL
+                JSONArray jArray = jParser.getJSONFromUrl(url);
+
+                for (int count = 0; count < jArray.length(); count++) {
+                    data = jArray.optJSONObject(count);
+
+                    Event singleEvent = new Event();
 
                     singleEvent.setId(data.getInt(TAG_EVENT_ID));
                     singleEvent.setName(data.getString(TAG_EVENT_NAME));
@@ -73,14 +65,21 @@ public class EventsActivity extends Activity {
                     Log.d("Test", "Event ID: " + singleEvent.getId() + " Name: " + singleEvent.getName() + " Venue: " + singleEvent.getVenue() + " Start Date: " + singleEvent.getStartDate() + " End Date: " + singleEvent.getEndDate() + " Organizer Id: " + singleEvent.getEventOrganizer());
 
                     eventList.add(singleEvent);
-                    Log.d("Test", eventList.get(count).getName());
-                    // inside the for loop the is seems the singleEvent gets added into the eventList
-                    //but when I call it the event list in the onCreate method, it's saying that it is empty.
                 }
 
-            } catch (JSONException e) {
+            }catch (JSONException e){
                 e.printStackTrace();
             }
+
+            return eventList;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Event> events) {
+
+            eventAdapter = new EventsAdapter(EventsActivity.this, events);
+            eventListView = (ListView)findViewById(R.id.eventListView);
+            eventListView.setAdapter(eventAdapter);
 
         }
     }
