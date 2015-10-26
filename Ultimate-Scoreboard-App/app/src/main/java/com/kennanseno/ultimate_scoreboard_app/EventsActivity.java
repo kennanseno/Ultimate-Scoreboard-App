@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,12 +35,7 @@ public class EventsActivity extends Activity {
         setContentView(R.layout.event_layout);
 
         new JSONParse().execute();
-
-        //uncomment to test eventList value
-        //Log.d("Test", eventList.get(0).getName());
-
     }
-
 
     private class JSONParse extends AsyncTask<String, String, ArrayList<Event>>{
 
@@ -69,7 +65,6 @@ public class EventsActivity extends Activity {
                     Log.d("Test", "Event ID: " + singleEvent.getId() + " Name: " + singleEvent.getName() + " Venue: " + singleEvent.getVenue() + " Start Date: " + singleEvent.getStartDate() + " End Date: " + singleEvent.getEndDate() + " Organizer Id: " + singleEvent.getEventOrganizer());
 
                     eventList.add(singleEvent);
-                    Log.d("Test", eventList.get(count).getName());
                 }
 
             }catch (JSONException e){
@@ -78,6 +73,7 @@ public class EventsActivity extends Activity {
 
             return eventList;
         }
+
         @Override
         protected void onPostExecute(ArrayList<Event> events) {
 
