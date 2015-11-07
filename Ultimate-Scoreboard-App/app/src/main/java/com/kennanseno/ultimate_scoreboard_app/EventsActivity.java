@@ -34,17 +34,37 @@ public class EventsActivity extends AppCompatActivity {
     ListView eventListView;
     EventsAdapter eventAdapter;
     ArrayList<Event> eventList = new ArrayList<>();
+    DBManager dbManager =  new DBManager(EventsActivity.this);
 
+
+    //TODO transition animation between activities
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_layout);
 
-        new JSONParse().execute();
+        //new JSONParse().execute();
+        Bundle extras = getIntent().getExtras();
+        Log.d("Test", extras.getString("user_id"));
 
-        //TODO transition animation between activities
+        eventList = dbManager.getAllEvents();
+        eventAdapter = new EventsAdapter(EventsActivity.this, eventList);
+        eventListView = (ListView)findViewById(R.id.eventListView);
+        eventListView.setAdapter(eventAdapter);
+
+        eventListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String eventId = Integer.toString(eventList.get(position).getId());
+                Intent intent = new Intent(EventsActivity.this, ScheduleActivity.class);
+                intent.putExtra("eventId", eventId);
+                startActivity(intent);
+            }
+        });
     }
 
+
+    /*
     private class JSONParse extends AsyncTask<String, String, ArrayList<Event>>{
 
         @Override
@@ -98,5 +118,7 @@ public class EventsActivity extends AppCompatActivity {
             });
         }
     }
+
+    */
 
 }

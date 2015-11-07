@@ -61,9 +61,9 @@ public class ScheduleActivity extends AppCompatActivity {
                     singleSchedule.setDay(data.getInt("day"));
                     singleSchedule.setEventId(data.getInt("event_id"));
 
-                    Log.d("Test", "ID:" + singleSchedule.getMatchId() + " Club1 Code:" + singleSchedule.getClub1Id() + " Club1 Score:" + singleSchedule.getClub1Score() + " Club1 SpiritScore:" + singleSchedule.getClub1SpiritScore());
-                    Log.d("Test", "Club2 Code:" + singleSchedule.getClub2Id() + " Club2 Score:" + singleSchedule.getClub2Score() + " Club2 SpiritScore:" + singleSchedule.getClub2SpiritScore());
-                    Log.d("Test", "Start Time:" + singleSchedule.getStartTime() + " End Time:" + singleSchedule.getEndTime() + " Day:" + singleSchedule.getDay() + " Event ID:" + singleSchedule.getEventId());
+                    //Log.d("Test", "ID:" + singleSchedule.getMatchId() + " Club1 Code:" + singleSchedule.getClub1Id() + " Club1 Score:" + singleSchedule.getClub1Score() + " Club1 SpiritScore:" + singleSchedule.getClub1SpiritScore());
+                    //Log.d("Test", "Club2 Code:" + singleSchedule.getClub2Id() + " Club2 Score:" + singleSchedule.getClub2Score() + " Club2 SpiritScore:" + singleSchedule.getClub2SpiritScore());
+                    //Log.d("Test", "Start Time:" + singleSchedule.getStartTime() + " End Time:" + singleSchedule.getEndTime() + " Day:" + singleSchedule.getDay() + " Event ID:" + singleSchedule.getEventId());
 
                     scheduleList.add(singleSchedule);
                 }

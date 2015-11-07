@@ -7,13 +7,13 @@ public class Event {
     private String venue;
     private String startDate;
     private String endDate;
-    private int eventOrganizer;
+    private String eventOrganizer;
 
     public Event(){
 
     };
 
-    public Event(int id, String name, String venue, String startDate, String endDate, int eventOrganizer) {
+    public Event(int id, String name, String venue, String startDate, String endDate, String eventOrganizer) {
         this.id = id;
         this.name = name;
         this.venue = venue;
@@ -54,11 +54,11 @@ public class Event {
         this.endDate = endDate;
     }
 
-    public int getEventOrganizer() {
+    public String getEventOrganizer() {
         return eventOrganizer;
     }
 
-    public void setEventOrganizer(int eventOrganizer) {
+    public void setEventOrganizer(String eventOrganizer) {
         this.eventOrganizer = eventOrganizer;
     }
 
