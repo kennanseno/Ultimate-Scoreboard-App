@@ -20,6 +20,7 @@ public class ScheduleActivity extends AppCompatActivity {
     ListView scheduleListView;
     ScheduleAdapter scheduleAdapter;
     ArrayList<Schedule> scheduleList = new ArrayList<>();
+    DBManager dbManager =  new DBManager(ScheduleActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,11 +28,19 @@ public class ScheduleActivity extends AppCompatActivity {
         setContentView(R.layout.schedule_layout);
         Bundle extras = getIntent().getExtras();
 
-        url = "http://kennanseno.com/ultimate-app/getMatches.php?event_id=" + extras.getString("eventId");
+        int eventId = Integer.parseInt(extras.getString("eventId"));
+        scheduleList = dbManager.getSchedules(eventId);
 
-        new JSONParse().execute();
+        scheduleAdapter = new ScheduleAdapter(ScheduleActivity.this, scheduleList);
+        scheduleListView = (ListView) findViewById(R.id.scheduleListView);
+        scheduleListView.setAdapter(scheduleAdapter);
+
+        //url = "http://kennanseno.com/ultimate-app/getMatches.php?event_id=" + extras.getString("eventId");
+        //new JSONParse().execute();
     }
 
+
+    /*
     private class JSONParse extends AsyncTask<String, String, ArrayList<Schedule>> {
 
         @Override
@@ -83,4 +92,6 @@ public class ScheduleActivity extends AppCompatActivity {
             scheduleListView.setAdapter(scheduleAdapter);
         }
     }
+
+    */
 }
