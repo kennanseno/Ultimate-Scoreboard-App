@@ -5,12 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BaseColumns;
 import android.util.Log;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DBManager {
 
@@ -94,6 +90,47 @@ public class DBManager {
         return eventArrayList;
     }
 
+    public ArrayList<Schedule> getSchedules(int eventId){
+        open();
+        //Get data from db then add it to an arraylist
+        Cursor mCursor = myDb.rawQuery("SELECT m.match_id, m.club1_id, s1.score AS club1_score, s1.spirit_score AS club1_spirit_score, m.club2_id, s2.score AS club2_score, s2.spirit_score AS club2_spirit_score, m.start_time, m.end_time, m.day, m.event_id " +
+                        "FROM Matches m " +
+                        "JOIN Event e ON m.event_id=e.event_id " +
+                        "JOIN Score s1 ON m.club1_score_id=s1.score_id " +
+                        "JOIN Score s2 ON m.club2_score_id=s2.score_id " +
+                        "WHERE m.event_id=" + eventId  +
+                        " ORDER BY start_time", null);
+
+        ArrayList<Schedule> scheduleArrayList = new ArrayList<>();
+
+        if (mCursor.moveToFirst()) {
+            do {
+                Schedule schedule = new Schedule();
+                schedule.setMatchId(mCursor.getInt(mCursor.getColumnIndex(Table.Matches.ID)));
+                schedule.setClub1Id(mCursor.getString(mCursor.getColumnIndex(Table.Matches.CLUB2_ID)));
+                schedule.setClub1Score(mCursor.getInt(mCursor.getColumnIndex("club1_score")));
+                schedule.setClub1SpiritScore(mCursor.getInt(mCursor.getColumnIndex("club1_spirit_score")));
+                schedule.setClub2Id(mCursor.getString(mCursor.getColumnIndex(Table.Matches.CLUB2_ID)));
+                schedule.setClub2Score(mCursor.getInt(mCursor.getColumnIndex("club2_score")));
+                schedule.setClub2SpiritScore(mCursor.getInt(mCursor.getColumnIndex("club2_spirit_score")));
+                schedule.setStartTime(mCursor.getString(mCursor.getColumnIndex(Table.Matches.START_TIME)));
+                schedule.setEndTime(mCursor.getString(mCursor.getColumnIndex(Table.Matches.END_TIME)));
+                schedule.setDay(mCursor.getInt(mCursor.getColumnIndex(Table.Matches.DAY)));
+                schedule.setEventId(mCursor.getInt(mCursor.getColumnIndex(Table.Matches.EVENT_ID)));
+
+                Log.d("Test", "ID:" + schedule.getMatchId() + " Club1 Code:" + schedule.getClub1Id() + " Club1 Score:" + schedule.getClub1Score() + " Club1 SpiritScore:" + schedule.getClub1SpiritScore());
+                Log.d("Test", "Club2 Code:" + schedule.getClub2Id() + " Club2 Score:" + schedule.getClub2Score() + " Club2 SpiritScore:" + schedule.getClub2SpiritScore());
+                Log.d("Test", "Start Time:" + schedule.getStartTime() + " End Time:" + schedule.getEndTime() + " Day:" + schedule.getDay() + " Event ID:" + schedule.getEventId());
+
+
+                scheduleArrayList.add(schedule);
+
+            } while (mCursor.moveToNext());
+        }
+
+        close();
+        return scheduleArrayList;
+    }
 
     private boolean isNewUser(String id){
         Cursor cursor = myDb.rawQuery("SELECT * FROM " + Table.User.TABLE_NAME + " WHERE " + Table.User.ID + " like " + id, null);
