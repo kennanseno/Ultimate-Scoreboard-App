@@ -3,6 +3,7 @@ package com.kennanseno.ultimate_scoreboard_app;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Toast;
 import com.facebook.CallbackManager;
@@ -14,7 +15,7 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity{
 
     private LoginButton loginButton;
     private CallbackManager callbackManager;

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,9 +15,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.ArrayList;
 
-import static android.app.ActivityOptions.*;
 
-public class EventsActivity extends Activity {
+public class EventsActivity extends AppCompatActivity {
 
     //URL to get JSON Array
     private String url = "http://kennanseno.com/ultimate-app/getEvents.php";
