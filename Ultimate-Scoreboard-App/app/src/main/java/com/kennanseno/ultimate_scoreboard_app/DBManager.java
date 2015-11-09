@@ -93,11 +93,12 @@ public class DBManager {
     public ArrayList<Schedule> getSchedules(int eventId){
         open();
         //Get data from db then add it to an arraylist
-        Cursor mCursor = myDb.rawQuery("SELECT m.match_id, m.club1_id, s1.score AS club1_score, s1.spirit_score AS club1_spirit_score, m.club2_id, s2.score AS club2_score, s2.spirit_score AS club2_spirit_score, m.start_time, m.end_time, m.day, m.event_id " +
-                        "FROM Matches m " +
-                        "JOIN Event e ON m.event_id=e.event_id " +
-                        "JOIN Score s1 ON m.club1_score_id=s1.score_id " +
-                        "JOIN Score s2 ON m.club2_score_id=s2.score_id " +
+        Cursor mCursor = myDb.rawQuery(
+                "SELECT m.match_id, m.club1_id, s1.score AS club1_score, s1.spirit_score AS club1_spirit_score, m.club2_id, s2.score AS club2_score, s2.spirit_score AS club2_spirit_score, m.start_time, m.end_time, m.day, m.event_id " +
+                        "FROM " + Table.Matches.TABLE_NAME + " m " +
+                        "JOIN " + Table.Event.TABLE_NAME + " e ON m.event_id=e.event_id " +
+                        "JOIN " + Table.Score.TABLE_NAME + " s1 ON m.club1_score_id=s1.score_id " +
+                        "JOIN " + Table.Score.TABLE_NAME + " s2 ON m.club2_score_id=s2.score_id " +
                         "WHERE m.event_id=" + eventId  +
                         " ORDER BY start_time", null);
 
@@ -107,7 +108,7 @@ public class DBManager {
             do {
                 Schedule schedule = new Schedule();
                 schedule.setMatchId(mCursor.getInt(mCursor.getColumnIndex(Table.Matches.ID)));
-                schedule.setClub1Id(mCursor.getString(mCursor.getColumnIndex(Table.Matches.CLUB2_ID)));
+                schedule.setClub1Id(mCursor.getString(mCursor.getColumnIndex(Table.Matches.CLUB1_ID)));
                 schedule.setClub1Score(mCursor.getInt(mCursor.getColumnIndex("club1_score")));
                 schedule.setClub1SpiritScore(mCursor.getInt(mCursor.getColumnIndex("club1_spirit_score")));
                 schedule.setClub2Id(mCursor.getString(mCursor.getColumnIndex(Table.Matches.CLUB2_ID)));
