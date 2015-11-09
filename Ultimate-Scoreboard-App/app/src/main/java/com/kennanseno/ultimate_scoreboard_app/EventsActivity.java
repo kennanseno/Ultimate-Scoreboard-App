@@ -6,9 +6,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import android.support.v7.widget.Toolbar;
+import android.support.v7.app.ActionBarActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +41,7 @@ public class EventsActivity extends AppCompatActivity {
     EventsAdapter eventAdapter;
     ArrayList<Event> eventList = new ArrayList<>();
     DBManager dbManager =  new DBManager(EventsActivity.this);
+    Toolbar toolbar;
 
 
     //TODO transition animation between activities
@@ -42,6 +49,11 @@ public class EventsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_layout);
+
+        //toolbar
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Events");
 
         //new JSONParse().execute();
         Bundle extras = getIntent().getExtras();
@@ -61,8 +73,30 @@ public class EventsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_action,menu);
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.new_event:
+                        Log.d("Test", "Add new event clicked!");
+                        break;
+                    case R.id.action_settings:
+                        Log.d("Test", "Action Settings clicked!");
+                        break;
+                }
+                return true;
+            }
+        });
+
+        return true;
+    }
 
     /*
     private class JSONParse extends AsyncTask<String, String, ArrayList<Event>>{

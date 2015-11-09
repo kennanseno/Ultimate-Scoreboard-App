@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Ultimate_Scoreboard_App</string>
+    <string name="event_title">Events</string>
     <string name="facebook_app_id">528818193960922</string>
     <string name="event_name_text">Event Name</string>
     <string name="start_date_text">Start Date</string>
