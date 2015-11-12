@@ -80,20 +80,20 @@ public class EventsActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_action,menu);
 
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.new_event:
-                        Log.d("Test", "Add new event clicked!");
-                        break;
-                    case R.id.action_settings:
-                        Log.d("Test", "Action Settings clicked!");
-                        break;
-                }
-                return true;
-            }
-        });
+//        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.new_event:
+//                        Log.d("Test", "Add new event clicked!");
+//                        break;
+//                    case R.id.action_settings:
+//                        Log.d("Test", "Action Settings clicked!");
+//                        break;
+//                }
+//                return true;
+//            }
+//        });
 
         return true;
     }
