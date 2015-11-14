@@ -1,13 +1,14 @@
-package com.kennanseno.ultimate_scoreboard_app;
+package com.kennanseno.ultimate_scoreboard_app.Activity;
 
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ListView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
+import com.kennanseno.ultimate_scoreboard_app.Backend.DBManager;
+import com.kennanseno.ultimate_scoreboard_app.R;
+import com.kennanseno.ultimate_scoreboard_app.Model.Schedule;
+import com.kennanseno.ultimate_scoreboard_app.Adapter.ScheduleAdapter;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;

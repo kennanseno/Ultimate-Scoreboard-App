@@ -17,4 +17,7 @@
     <string name="club1_spirit_score_text">4</string>
     <string name="club2_spirit_score_text">4</string>
     <string name="schedule_day_text">Day 1</string>
+    <string name="create_event_title">CREATE EVENT</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="create_text">Create</string>
 </resources>

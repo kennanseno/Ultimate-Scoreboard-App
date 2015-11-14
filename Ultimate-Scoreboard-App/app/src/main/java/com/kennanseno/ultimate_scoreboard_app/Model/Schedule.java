@@ -1,4 +1,4 @@
-package com.kennanseno.ultimate_scoreboard_app;
+package com.kennanseno.ultimate_scoreboard_app.Model;
 
 public class Schedule {
 

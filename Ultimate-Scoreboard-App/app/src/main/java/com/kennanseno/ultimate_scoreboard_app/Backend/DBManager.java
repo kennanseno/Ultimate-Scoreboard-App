@@ -1,4 +1,4 @@
-package com.kennanseno.ultimate_scoreboard_app;
+package com.kennanseno.ultimate_scoreboard_app.Backend;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.kennanseno.ultimate_scoreboard_app.Model.Event;
+import com.kennanseno.ultimate_scoreboard_app.Model.Schedule;
+import com.kennanseno.ultimate_scoreboard_app.Model.Table;
+
 import java.util.ArrayList;
 
 public class DBManager {
@@ -60,6 +65,20 @@ public class DBManager {
         }else{
             Log.d("Test", "Old user!");
         }
+        close();
+    }
+
+    public void insertNewEvent(String name, String venue, String startDate, String endDate, int userId){
+
+        open();
+        ContentValues values = new ContentValues();
+        values.put(Table.Event.NAME, name);
+        values.put(Table.Event.VENUE, venue);
+        values.put(Table.Event.START_DATE, startDate);
+        values.put(Table.Event.END_DATE, endDate);
+        values.put(Table.Event.USER_ID, userId);
+        myDb.insert(Table.Event.TABLE_NAME, null, values);
+
         close();
     }
 

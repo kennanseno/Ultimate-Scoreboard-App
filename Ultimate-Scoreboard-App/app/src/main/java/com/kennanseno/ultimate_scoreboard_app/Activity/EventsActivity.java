@@ -1,4 +1,4 @@
-package com.kennanseno.ultimate_scoreboard_app;
+package com.kennanseno.ultimate_scoreboard_app.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.kennanseno.ultimate_scoreboard_app.Adapter.EventsAdapter;
+import com.kennanseno.ultimate_scoreboard_app.Backend.DBManager;
+import com.kennanseno.ultimate_scoreboard_app.Model.Event;
+import com.kennanseno.ultimate_scoreboard_app.R;
 
 import org.json.JSONObject;
 
@@ -36,6 +41,8 @@ public class EventsActivity extends AppCompatActivity {
     ArrayList<Event> eventList = new ArrayList<>();
     DBManager dbManager =  new DBManager(EventsActivity.this);
     Toolbar toolbar;
+    int userId;
+    Intent intent;
 
 
     //TODO transition animation between activities
@@ -44,13 +51,14 @@ public class EventsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_layout);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.event_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Events");
 
         //new JSONParse().execute();
         Bundle extras = getIntent().getExtras();
-        Log.d("Test", extras.getString("user_id"));
+        userId = extras.getInt("userId");
+        Log.d("Test", "ID: " +  userId);
 
         eventList = dbManager.getAllEvents();
         eventAdapter = new EventsAdapter(EventsActivity.this, eventList);
@@ -61,7 +69,7 @@ public class EventsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String eventId = Integer.toString(eventList.get(position).getId());
-                Intent intent = new Intent(EventsActivity.this, ScheduleActivity.class);
+                intent = new Intent(EventsActivity.this, ScheduleActivity.class);
                 intent.putExtra("eventId", eventId);
                 startActivity(intent);
             }
@@ -80,11 +88,14 @@ public class EventsActivity extends AppCompatActivity {
 
         int id = item.getItemId();
         if (id == R.id.new_event) {
-            Log.d("test", "toolbar added!");
-
+            intent = new Intent(EventsActivity.this, CreateEventActivity.class);
+            intent.putExtra("userId", userId);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
 
 //    @Override

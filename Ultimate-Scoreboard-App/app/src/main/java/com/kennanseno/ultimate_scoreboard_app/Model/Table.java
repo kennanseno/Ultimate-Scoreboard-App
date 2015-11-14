@@ -1,7 +1,5 @@
-package com.kennanseno.ultimate_scoreboard_app;
+package com.kennanseno.ultimate_scoreboard_app.Model;
 
-
-import android.provider.BaseColumns;
 
 public class Table {
 
@@ -80,9 +78,9 @@ public class Table {
                         ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                         NAME + " TEXT," +
                         VENUE + " TEXT," +
-                        START_DATE + " TEXT," +
-                        END_DATE + " TEXT," +
-                        USER_ID + " TEXT," +
+                        START_DATE + " DATE," +
+                        END_DATE + " DATE," +
+                        USER_ID + " INTEGER," +
                         "FOREIGN KEY (" + USER_ID + ") REFERENCES " + User.TABLE_NAME + "(" + User.ID + "))";
 
         public static final String DELETE_EVENT_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
