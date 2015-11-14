@@ -44,7 +44,7 @@ public class EventsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_layout);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.event_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Events");
 
@@ -80,7 +80,7 @@ public class EventsActivity extends AppCompatActivity {
 
         int id = item.getItemId();
         if (id == R.id.new_event) {
-            Log.d("test", "toolbar added!");
+            Log.d("Test", "toolbar added!");
 
         }
         return super.onOptionsItemSelected(item);
