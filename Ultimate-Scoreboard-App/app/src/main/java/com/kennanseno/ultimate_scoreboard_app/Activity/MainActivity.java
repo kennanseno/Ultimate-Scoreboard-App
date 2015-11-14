@@ -1,6 +1,5 @@
-package com.kennanseno.ultimate_scoreboard_app;
+package com.kennanseno.ultimate_scoreboard_app.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +11,11 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.kennanseno.ultimate_scoreboard_app.Backend.DBManager;
+import com.kennanseno.ultimate_scoreboard_app.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity{
                                     Log.d("Test", object.toString());
                                     Log.d("Test", "ID: " + object.getString("id") + " Name:" + object.getString("name"));
 
-                                    intent.putExtra("user_id", object.getString("id"));
+                                    intent.putExtra("userId", object.getInt("id"));
                                     startActivity(intent);
 
                                 } catch (JSONException e) {
