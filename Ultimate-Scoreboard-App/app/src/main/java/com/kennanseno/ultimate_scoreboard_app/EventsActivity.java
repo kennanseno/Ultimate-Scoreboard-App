@@ -1,24 +1,18 @@
 package com.kennanseno.ultimate_scoreboard_app;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import android.support.v7.widget.Toolbar;
-import android.support.v7.app.ActionBarActivity;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 
@@ -50,7 +44,6 @@ public class EventsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_layout);
 
-        //toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Events");
@@ -78,25 +71,24 @@ public class EventsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_action,menu);
-
-        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.new_event:
-                        Log.d("Test", "Add new event clicked!");
-                        break;
-                    case R.id.action_settings:
-                        Log.d("Test", "Action Settings clicked!");
-                        break;
-                }
-                return true;
-            }
-        });
-
+        getMenuInflater().inflate(R.menu.toolbar_action, menu);
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.new_event) {
+            Log.d("test", "toolbar added!");
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+//    @Override
+
 
     /*
     private class JSONParse extends AsyncTask<String, String, ArrayList<Event>>{
