@@ -40,7 +40,8 @@
             android:name=".Activity.CreateScheduleActivity"
             android:screenOrientation="portrait" >
         </activity>
-        <activity android:name=".Activity.UpdateScheduleActivity" >
+        <activity android:name=".Activity.UpdateScheduleActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 
