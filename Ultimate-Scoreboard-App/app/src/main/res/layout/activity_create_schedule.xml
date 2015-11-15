@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.kennanseno.ultimate_scoreboard_app.Activity.CreateScheduleActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="CREATE MATCH"
+        android:id="@+id/textView2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp" />
+
+    <AutoCompleteTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Team 1"
+        android:id="@+id/createMatchTeam1TextView"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:imeOptions="actionDone"
+        android:singleLine="true"/>
+
+    <AutoCompleteTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Team 2"
+        android:id="@+id/createMatchTeam2TextView"
+        android:layout_below="@+id/createMatchTeam1TextView"
+        android:layout_alignStart="@+id/createMatchTeam1TextView"
+        android:layout_marginTop="35dp"
+        android:layout_alignEnd="@+id/createMatchTeam1TextView"
+        android:imeOptions="actionDone"
+        android:singleLine="true"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="Start Time"
+        android:id="@+id/createMatchStartTimeButton"
+        android:layout_above="@+id/createMatchCancelButton"
+        android:layout_alignStart="@+id/createMatchTeam2TextView"
+        android:layout_marginBottom="59dp" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="End Time"
+        android:id="@+id/createMatchEndTimeButton"
+        android:layout_alignTop="@+id/createMatchStartTimeButton"
+        android:layout_alignEnd="@+id/createMatchTeam2TextView" />
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="@string/create_text"
+        android:id="@+id/createMatchCreateButton"
+        android:layout_marginBottom="67dp"
+        android:background="#4e90f3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/createMatchEndTimeButton"
+        android:layout_alignParentEnd="false" />
+
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel_text"
+        android:id="@+id/createMatchCancelButton"
+        android:background="#83868d"
+        android:layout_alignTop="@+id/createMatchCreateButton"
+        android:layout_alignStart="@+id/createMatchStartTimeButton" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/createMatchDayEditText"
+        android:layout_below="@+id/createMatchTeam2TextView"
+        android:layout_alignStart="@+id/createMatchTeam2TextView"
+        android:layout_marginTop="35dp"
+        android:layout_alignEnd="@+id/createMatchEndTimeButton"
+        android:text="Day(e.g. 1,2)"
+        android:singleLine="true"
+        android:imeOptions="actionDone"/>
+
+</RelativeLayout>

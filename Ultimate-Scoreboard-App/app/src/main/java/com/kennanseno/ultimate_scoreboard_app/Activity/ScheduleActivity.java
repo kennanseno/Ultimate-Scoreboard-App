@@ -1,7 +1,14 @@
 package com.kennanseno.ultimate_scoreboard_app.Activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.kennanseno.ultimate_scoreboard_app.Backend.DBManager;
@@ -17,6 +24,10 @@ public class ScheduleActivity extends AppCompatActivity {
 
     private String url;
     JSONObject data = null;
+    Toolbar toolbar;
+    Intent intent;
+    String userId;
+    int eventId;
 
     ListView scheduleListView;
     ScheduleAdapter scheduleAdapter;
@@ -28,17 +39,51 @@ public class ScheduleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_layout);
         Bundle extras = getIntent().getExtras();
+        userId = extras.getString("userId");
+        eventId = extras.getInt("eventId");
 
-        int eventId = Integer.parseInt(extras.getString("eventId"));
+        toolbar = (Toolbar) findViewById(R.id.schedule_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Schedules");
+
+        Log.d("Test", "EVENT ID: " + eventId);
         scheduleList = dbManager.getSchedules(eventId);
 
         scheduleAdapter = new ScheduleAdapter(ScheduleActivity.this, scheduleList);
         scheduleListView = (ListView) findViewById(R.id.scheduleListView);
         scheduleListView.setAdapter(scheduleAdapter);
 
+        scheduleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("Test", scheduleList.get(position).toString());
+            }
+        });
+
         //url = "http://kennanseno.com/ultimate-app/getMatches.php?event_id=" + extras.getString("eventId");
         //new JSONParse().execute();
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.schedule_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.new_schedule) {
+            intent = new Intent(ScheduleActivity.this, CreateScheduleActivity.class);
+            intent.putExtra("eventId", eventId);
+            startActivity(intent);
+        }else if(id == R.id.rankings){
+            Log.d("Test", "Rankings Activity clicked!");
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
     /*

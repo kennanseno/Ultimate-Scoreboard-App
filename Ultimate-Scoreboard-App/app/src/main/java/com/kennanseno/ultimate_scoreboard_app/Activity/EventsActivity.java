@@ -50,6 +50,7 @@ public class EventsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_layout);
+        Log.d("Test", ">>>>EventsActivity<<<<");
 
         toolbar = (Toolbar) findViewById(R.id.event_toolbar);
         setSupportActionBar(toolbar);
@@ -58,7 +59,7 @@ public class EventsActivity extends AppCompatActivity {
         //new JSONParse().execute();
         Bundle extras = getIntent().getExtras();
         userId = extras.getInt("userId");
-        Log.d("Test", "ID: " +  userId);
+        Log.d("Test", "USER ID: " +  userId);
 
         eventList = dbManager.getAllEvents();
         eventAdapter = new EventsAdapter(EventsActivity.this, eventList);
@@ -68,9 +69,10 @@ public class EventsActivity extends AppCompatActivity {
         eventListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String eventId = Integer.toString(eventList.get(position).getId());
+                int eventId = eventList.get(position).getId();
                 intent = new Intent(EventsActivity.this, ScheduleActivity.class);
                 intent.putExtra("eventId", eventId);
+                intent.putExtra("userId", userId);
                 startActivity(intent);
             }
         });
@@ -79,7 +81,7 @@ public class EventsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_action, menu);
+        getMenuInflater().inflate(R.menu.event_menu, menu);
         return true;
     }
 

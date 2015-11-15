@@ -1,6 +1,7 @@
 package com.kennanseno.ultimate_scoreboard_app.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,12 +41,12 @@ public class ScheduleAdapter extends ArrayAdapter<Schedule>{
 
         club1Code.setText(singleSchedule.getClub1Id());
         club2Code.setText(singleSchedule.getClub2Id());
+        day.setText("Day " + singleSchedule.getDay());
+        time.setText(singleSchedule.getStartTime() + " - " + singleSchedule.getEndTime());
         club1Score.setText(Integer.toString(singleSchedule.getClub1Score()));
         club2Score.setText(Integer.toString(singleSchedule.getClub2Score()));
         club1SpiritScore.setText(Integer.toString(singleSchedule.getClub1SpiritScore()));
         club2SpiritScore.setText(Integer.toString(singleSchedule.getClub2SpiritScore()));
-        time.setText(singleSchedule.getStartTime() + " - " + singleSchedule.getEndTime());
-        day.setText("Day " + singleSchedule.getDay());
 
         return convertView;
     }
