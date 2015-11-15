@@ -106,8 +106,8 @@ public class Table {
                         CLUB1_SCORE_ID + " INTEGER," +
                         CLUB2_ID + " TEXT," +
                         CLUB2_SCORE_ID + " INTEGER," +
-                        START_TIME + " TEXT," +
-                        END_TIME + " TEXT," +
+                        START_TIME + " TIME," +
+                        END_TIME + " TIME," +
                         DAY + " INTEGER," +
                         EVENT_ID + " INTEGER," +
                         "FOREIGN KEY (" + CLUB1_ID + ") REFERENCES " + Club.TABLE_NAME + "(" + Club.ID + ")," +

@@ -5,7 +5,7 @@
     <item
         android:title="@string/event_title"
         android:id="@+id/new_event"
-        android:icon="@mipmap/new_event"
+        android:icon="@drawable/add_action_name"
         android:orderInCategory="1"
         android:menuCategory="secondary"
         app:showAsAction="ifRoom">

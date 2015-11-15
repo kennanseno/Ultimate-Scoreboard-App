@@ -21,7 +21,8 @@ import com.kennanseno.ultimate_scoreboard_app.R;
 public class CreateEventActivity extends AppCompatActivity {
 
     DBManager dbManager =  new DBManager(CreateEventActivity.this);
-    int startYear, startMonth, startDay, endYear, endMonth, endDay, userId;
+    int startYear, startMonth, startDay, endYear, endMonth, endDay;
+    int userId;
     static final int END_DATE_DIALOG_ID = 0;
     static final int START_DATE_DIALOG_ID = 1;
     Button addStartDateButton, addEndDateButton, createButton, cancelButton;
