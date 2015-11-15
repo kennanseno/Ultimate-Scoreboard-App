@@ -22,4 +22,6 @@
     <string name="create_event_title">CREATE EVENT</string>
     <string name="cancel_text">Cancel</string>
     <string name="create_text">Create</string>
+    <string name="update_text">Update</string>
+    <string name="Score_text">Score</string>
 </resources>

@@ -38,6 +38,7 @@ public class ScheduleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_layout);
+        Log.d("Test", ">>>ScheduleActivity<<<");
         Bundle extras = getIntent().getExtras();
         userId = extras.getString("userId");
         eventId = extras.getInt("eventId");
@@ -46,7 +47,6 @@ public class ScheduleActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Schedules");
 
-        Log.d("Test", "EVENT ID: " + eventId);
         scheduleList = dbManager.getSchedules(eventId);
 
         scheduleAdapter = new ScheduleAdapter(ScheduleActivity.this, scheduleList);
@@ -57,7 +57,11 @@ public class ScheduleActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("Test", scheduleList.get(position).toString());
-            }
+                intent = new Intent(ScheduleActivity.this, UpdateScheduleActivity.class);
+                intent.putExtra("userId", userId);
+                intent.putExtra("eventId", eventId);
+                startActivity(intent);
+        }
         });
 
         //url = "http://kennanseno.com/ultimate-app/getMatches.php?event_id=" + extras.getString("eventId");
