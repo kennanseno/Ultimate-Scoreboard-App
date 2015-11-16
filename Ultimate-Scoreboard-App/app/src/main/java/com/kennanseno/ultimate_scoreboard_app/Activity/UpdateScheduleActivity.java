@@ -1,9 +1,12 @@
 package com.kennanseno.ultimate_scoreboard_app.Activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -41,6 +44,20 @@ public class UpdateScheduleActivity extends AppCompatActivity {
         updateResultButton = (Button)findViewById(R.id.updateMatchUpdateButton);
         cancelResultButton = (Button)findViewById(R.id.updateMatchCancelButton);
 
+        team1Score.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                team1Score.setText("");
+            }
+        });
+
+        team2Score.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                team2Score.setText("");
+            }
+        });
+
         updateResultButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,5 +78,12 @@ public class UpdateScheduleActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        return true;
     }
 }

@@ -1,8 +1,10 @@
 package com.kennanseno.ultimate_scoreboard_app.Activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -11,10 +13,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.kennanseno.ultimate_scoreboard_app.Backend.DBManager;
-import com.kennanseno.ultimate_scoreboard_app.R;
-import com.kennanseno.ultimate_scoreboard_app.Model.Schedule;
 import com.kennanseno.ultimate_scoreboard_app.Adapter.ScheduleAdapter;
+import com.kennanseno.ultimate_scoreboard_app.Backend.DBManager;
+import com.kennanseno.ultimate_scoreboard_app.Model.Schedule;
+import com.kennanseno.ultimate_scoreboard_app.R;
 
 import org.json.JSONObject;
 
@@ -55,13 +57,41 @@ public class ScheduleActivity extends AppCompatActivity {
 
         scheduleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("Test", scheduleList.get(position).toString());
-                intent = new Intent(ScheduleActivity.this, UpdateScheduleActivity.class);
-                intent.putExtra("userId", userId);
-                intent.putExtra("eventId", eventId);
-                startActivity(intent);
-        }
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                Log.w("Test", scheduleList.get(position).toString());
+//                intent = new Intent(ScheduleActivity.this, UpdateScheduleActivity.class);
+//                intent.putExtra("userId", userId);
+//                intent.putExtra("eventId", eventId);
+//                startActivity(intent);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(ScheduleActivity.this);
+                builder.setMessage("Delete or Update!");
+                builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        intent = new Intent(ScheduleActivity.this, UpdateScheduleActivity.class);
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("eventId", eventId);
+                        startActivity(intent);
+                    }
+                });
+
+                builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        Log.w("Test", "Delete Alert Dialog Clicked!");
+                        scheduleList.remove(position);
+                        scheduleAdapter.notifyDataSetChanged();
+                        //TODO add delete statement to delete data in local db
+                    }
+                });
+
+                builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.w("Test", "Cancel Alert Dialog clicked!");
+                    }
+                });
+                builder.show();
+            }
         });
 
         //url = "http://kennanseno.com/ultimate-app/getMatches.php?event_id=" + extras.getString("eventId");
@@ -85,9 +115,9 @@ public class ScheduleActivity extends AppCompatActivity {
         }else if(id == R.id.rankings){
             Log.d("Test", "Rankings Activity clicked!");
         }
+
         return super.onOptionsItemSelected(item);
     }
-
 
 
     /*
