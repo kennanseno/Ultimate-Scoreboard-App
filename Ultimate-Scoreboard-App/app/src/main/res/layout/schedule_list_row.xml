@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true">
+    android:layout_height="match_parent">
 
     <TextView
         android:layout_width="wrap_content"
@@ -12,9 +11,8 @@
         android:text="@string/club1_name_text"
         android:id="@+id/club1TextView"
         android:textAlignment="textStart"
-        android:layout_above="@+id/club1ScoreTextView"
-        android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/club1ScoreTextView" />
+        android:layout_above="@+id/club1SpiritScoreTextView"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -26,8 +24,7 @@
         android:layout_gravity="right"
         android:textAlignment="textEnd"
         android:layout_below="@+id/dayTextView"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/club2ScoreTextView" />
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -81,9 +78,8 @@
         android:id="@+id/club1SpiritScoreTextView"
         android:textAlignment="textStart"
         android:textSize="30sp"
-        android:layout_below="@+id/club2TextView"
-        android:layout_alignStart="@+id/club1TextView"
-        android:layout_toStartOf="@+id/club1ScoreTextView" />
+        android:layout_alignTop="@+id/club2SpiritScoreTextView"
+        android:layout_alignStart="@+id/club1TextView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -93,8 +89,7 @@
         android:id="@+id/club2SpiritScoreTextView"
         android:textAlignment="textEnd"
         android:textSize="30sp"
-        android:layout_alignTop="@+id/club1SpiritScoreTextView"
-        android:layout_alignStart="@+id/club2TextView"
+        android:layout_below="@+id/club2TextView"
         android:layout_alignEnd="@+id/club2TextView" />
 
     <TextView
