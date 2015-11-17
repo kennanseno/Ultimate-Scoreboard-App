@@ -69,20 +69,6 @@ public class CreateEventActivity extends AppCompatActivity {
             }
         });
 
-        eventName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eventName.setText("");
-            }
-        });
-
-        eventAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eventAddress.setText("");
-            }
-        });
-
         addStartDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

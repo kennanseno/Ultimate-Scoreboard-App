@@ -53,7 +53,7 @@ public class CreateScheduleActivity extends AppCompatActivity {
         dayEditText = (EditText)findViewById(R.id.createMatchDayEditText);
 
         //convert to array
-        ArrayList<String> clubList = new ArrayList<>();
+        ArrayList<String> clubList;
         clubList = dbManager.getClubNames();
         String[] clubNames = clubList.toArray(new String[clubList.size()]);
 
@@ -61,27 +61,6 @@ public class CreateScheduleActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, clubNames);
         team1AutoCompleteTextView.setAdapter(adapter);
         team2AutoCompleteTextView.setAdapter(adapter);
-
-        team1AutoCompleteTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                team1AutoCompleteTextView.setText("");
-            }
-        });
-
-        team2AutoCompleteTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                team2AutoCompleteTextView.setText("");
-            }
-        });
-
-        dayEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dayEditText.setText("");
-            }
-        });
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
