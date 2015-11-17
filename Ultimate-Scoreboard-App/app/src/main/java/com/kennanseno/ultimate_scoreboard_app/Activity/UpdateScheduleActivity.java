@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -34,10 +33,6 @@ public class UpdateScheduleActivity extends AppCompatActivity {
         eventId = extras.getInt("eventId");
         team1ScoreId = extras.getInt("team1ScoreId");
         team2ScoreId = extras.getInt("team2ScoreId");
-
-        Log.d("Test", ">>>UpdateScheduleActivity<<<");
-        Log.d("Test", "Team 1 Score ID:" + team1ScoreId);
-        Log.d("Test", "Team 2 Score ID:" + team2ScoreId);
 
         team1Score = (EditText)findViewById(R.id.updateMatchTeam1ScoreEditText);
         team1SpiritScore1 = (EditText)findViewById(R.id.updateMatchTeam1SpiritScore1EditText);

@@ -75,10 +75,6 @@ public class ScheduleActivity extends AppCompatActivity {
                         intent.putExtra("team1ScoreId", team1ScoreId);
                         intent.putExtra("team2ScoreId", team2ScoreId);
 
-                        Log.d("Test", ">>>ScheduleActivity<<<");
-                        Log.d("Test", "Team 1 Score ID:" + team1ScoreId);
-                        Log.d("Test", "Team 2 Score ID:" + team2ScoreId);
-
                         startActivity(intent);
                     }
                 });
