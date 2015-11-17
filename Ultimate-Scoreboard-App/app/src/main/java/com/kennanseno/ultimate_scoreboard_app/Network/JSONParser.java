@@ -1,4 +1,4 @@
-package com.kennanseno.ultimate_scoreboard_app.Backend;
+package com.kennanseno.ultimate_scoreboard_app.Network;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.kennanseno.ultimate_scoreboard_app.Backend.DBManager;
+import com.kennanseno.ultimate_scoreboard_app.Network.DBManager;
 import com.kennanseno.ultimate_scoreboard_app.R;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.kennanseno.ultimate_scoreboard_app.Backend;
+package com.kennanseno.ultimate_scoreboard_app.Network;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -54,7 +54,7 @@ public class DBManager {
     }
 
     public void insertNewUser(String id, String name){
-        open();
+        openDbConnection();
         if(isNewUser(id)){
             ContentValues values = new ContentValues();
             values.put(Table.User.ID, id);
@@ -65,12 +65,12 @@ public class DBManager {
         }else{
             Log.d("Test", "Old user!");
         }
-        close();
+        closeDbConnection();
     }
 
     public void insertNewEvent(String name, String venue, String startDate, String endDate, int userId){
 
-        open();
+        openDbConnection();
         ContentValues values = new ContentValues();
         values.put(Table.Event.NAME, name);
         values.put(Table.Event.VENUE, venue);
@@ -79,7 +79,7 @@ public class DBManager {
         values.put(Table.Event.USER_ID, userId);
         myDb.insert(Table.Event.TABLE_NAME, null, values);
 
-        close();
+        closeDbConnection();
     }
 
     public void insertNewSchedule(String team1, String team2, String startTime, String endTime, int day, int eventId ){
@@ -93,7 +93,7 @@ public class DBManager {
         int team2ScoreId = createScoreData();
         Log.d("Test", "Score 2 ID:" + team2ScoreId);
 
-        open();
+        openDbConnection();
         ContentValues values = new ContentValues();
         values.put(Table.Matches.CLUB1_ID, team1Code);
         values.put(Table.Matches.CLUB1_SCORE_ID, team1ScoreId);
@@ -105,14 +105,30 @@ public class DBManager {
         values.put(Table.Matches.EVENT_ID, eventId);
         myDb.insert(Table.Matches.TABLE_NAME, null, values);
 
-        close();
+        closeDbConnection();
+    }
+
+    public void updateScore(int id, int score, int spiritScore1, int spiritScore2, int spiritScore3, int spiritScore4, int spiritScore5){
+        int spiritTotal = spiritScore1 + spiritScore2 + spiritScore3 + spiritScore4 + spiritScore5;
+        openDbConnection();
+        ContentValues values = new ContentValues();
+        values.put(Table.Score.SCORE, score);
+        values.put(Table.Score.SPIRIT_RULE1,spiritScore1);
+        values.put(Table.Score.SPIRIT_RULE2, spiritScore2);
+        values.put(Table.Score.SPIRIT_RULE3, spiritScore3);
+        values.put(Table.Score.SPIRIT_RULE4, spiritScore4);
+        values.put(Table.Score.SPIRIT_RULE5, spiritScore5);
+        values.put(Table.Score.SPIRIT_TOTAL, spiritTotal);
+        myDb.update(Table.Score.TABLE_NAME, values, Table.Score.ID + "=" + id, null);
+
+        closeDbConnection();
     }
 
     //create a score row in Score table and returns the id of it
     public int createScoreData(){
         int id = 0;
 
-        open();
+        openDbConnection();
         //create new row
         ContentValues values = new ContentValues();
         values.put(Table.Score.SCORE, 00);
@@ -129,27 +145,39 @@ public class DBManager {
         if(mCursor.moveToLast()){
             id = mCursor.getInt(mCursor.getColumnIndex(Table.Score.ID));
         }
-        close();
+        closeDbConnection();
 
         return id;
     }
 
+    public void deleteMatchesData(int id){
+        openDbConnection();
+        myDb.delete(Table.Matches.TABLE_NAME, Table.Matches.ID + "=" + id, null);
+        closeDbConnection();
+    }
+
+    public void deleteScoreData(int id){
+        openDbConnection();
+        myDb.delete(Table.Score.TABLE_NAME, Table.Score.ID + "=" + id, null);
+        closeDbConnection();
+    }
+
     private String getClubCode(String clubName){
-        open();
+        openDbConnection();
         Cursor mCursor = myDb.rawQuery("SELECT " + Table.Club.ID + " FROM " + Table.Club.TABLE_NAME + " WHERE " + Table.Club.NAME + " like '" + clubName + "'", null);
         String name = null;
 
         if(mCursor.moveToFirst()) {
              name = mCursor.getString(mCursor.getColumnIndex(Table.Club.ID));
         }
-        close();
+        closeDbConnection();
 
         return name;
     }
 
 
     public ArrayList<Event> getAllEvents(){
-        open();
+        openDbConnection();
         //Get data from db then add it to an arraylist
         Cursor mCursor = myDb.rawQuery("SELECT * FROM " + Table.Event.TABLE_NAME, null);
         ArrayList<Event> eventArrayList = new ArrayList<Event>();
@@ -171,12 +199,12 @@ public class DBManager {
             } while (mCursor.moveToNext());
         }
 
-        close();
+        closeDbConnection();
         return eventArrayList;
     }
 
     public ArrayList<Schedule> getSchedules(int eventId){
-        open();
+        openDbConnection();
         //Get data from db then add it to an arraylist
         Cursor mCursor = myDb.rawQuery(
                 "SELECT m.match_id, m.club1_id, " +
@@ -221,13 +249,13 @@ public class DBManager {
             } while (mCursor.moveToNext());
         }
 
-        close();
+        closeDbConnection();
         return scheduleArrayList;
     }
 
     public ArrayList<String> getClubNames(){
 
-        open();
+        openDbConnection();
         Cursor mCursor = myDb.rawQuery("SELECT " + Table.Club.NAME + " FROM " + Table.Club.TABLE_NAME, null);
         ArrayList<String> clubName = new ArrayList<>();
 
@@ -237,7 +265,7 @@ public class DBManager {
             } while (mCursor.moveToNext());
 
         }
-        close();
+        closeDbConnection();
 
         return clubName;
     }
@@ -251,12 +279,12 @@ public class DBManager {
         return false;
     }
 
-    public void open(){
+    public void openDbConnection(){
         myDb = dbHelper.getWritableDatabase();
         myDb.isOpen();
     }
 
-    public void close(){
+    public void closeDbConnection(){
         dbHelper.close();
     }
 }
