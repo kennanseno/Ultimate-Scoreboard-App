@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.kennanseno.ultimate_scoreboard_app.Adapter.EventsAdapter;
-import com.kennanseno.ultimate_scoreboard_app.Backend.DBManager;
+import com.kennanseno.ultimate_scoreboard_app.Network.DBManager;
 import com.kennanseno.ultimate_scoreboard_app.Model.Event;
 import com.kennanseno.ultimate_scoreboard_app.R;
 

@@ -20,7 +20,7 @@
     <AutoCompleteTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Team 1"
+        android:hint="Team 1"
         android:id="@+id/createMatchTeam1TextView"
         android:layout_below="@+id/textView2"
         android:layout_marginTop="35dp"
@@ -34,7 +34,7 @@
     <AutoCompleteTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Team 2"
+        android:hint="Team 2"
         android:id="@+id/createMatchTeam2TextView"
         android:layout_below="@+id/createMatchTeam1TextView"
         android:layout_alignStart="@+id/createMatchTeam1TextView"
@@ -92,7 +92,7 @@
         android:layout_alignStart="@+id/createMatchTeam2TextView"
         android:layout_marginTop="35dp"
         android:layout_alignEnd="@+id/createMatchEndTimeButton"
-        android:text="Day(e.g. 1,2)"
+        android:hint="Day(e.g. 1,2)"
         android:singleLine="true"
         android:imeOptions="actionDone"/>
 

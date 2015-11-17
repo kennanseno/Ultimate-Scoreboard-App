@@ -15,7 +15,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.kennanseno.ultimate_scoreboard_app.Backend.DBManager;
+import com.kennanseno.ultimate_scoreboard_app.Network.DBManager;
 import com.kennanseno.ultimate_scoreboard_app.R;
 
 public class CreateEventActivity extends AppCompatActivity {
@@ -66,20 +66,6 @@ public class CreateEventActivity extends AppCompatActivity {
                 intent = new Intent(CreateEventActivity.this, EventsActivity.class);
                 intent.putExtra("userId", userId);
                 startActivity(intent);
-            }
-        });
-
-        eventName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eventName.setText("");
-            }
-        });
-
-        eventAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eventAddress.setText("");
             }
         });
 

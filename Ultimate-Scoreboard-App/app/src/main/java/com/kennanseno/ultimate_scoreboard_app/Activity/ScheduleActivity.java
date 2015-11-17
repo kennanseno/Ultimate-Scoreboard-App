@@ -12,9 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.kennanseno.ultimate_scoreboard_app.Adapter.ScheduleAdapter;
-import com.kennanseno.ultimate_scoreboard_app.Backend.DBManager;
+import com.kennanseno.ultimate_scoreboard_app.Network.DBManager;
 import com.kennanseno.ultimate_scoreboard_app.Model.Schedule;
 import com.kennanseno.ultimate_scoreboard_app.R;
 
@@ -29,7 +30,7 @@ public class ScheduleActivity extends AppCompatActivity {
     Toolbar toolbar;
     Intent intent;
     String userId;
-    int eventId;
+    int eventId, scheduleId, team1ScoreId, team2ScoreId;
 
     ListView scheduleListView;
     ScheduleAdapter scheduleAdapter;
@@ -52,6 +53,7 @@ public class ScheduleActivity extends AppCompatActivity {
         scheduleList = dbManager.getSchedules(eventId);
 
         scheduleAdapter = new ScheduleAdapter(ScheduleActivity.this, scheduleList);
+        scheduleAdapter.notifyDataSetChanged();
         scheduleListView = (ListView) findViewById(R.id.scheduleListView);
         scheduleListView.setAdapter(scheduleAdapter);
 
@@ -59,18 +61,20 @@ public class ScheduleActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 Log.w("Test", scheduleList.get(position).toString());
-//                intent = new Intent(ScheduleActivity.this, UpdateScheduleActivity.class);
-//                intent.putExtra("userId", userId);
-//                intent.putExtra("eventId", eventId);
-//                startActivity(intent);
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(ScheduleActivity.this);
                 builder.setMessage("Delete or Update!");
                 builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        team1ScoreId = scheduleList.get(position).getClub1ScoreId();
+                        team2ScoreId = scheduleList.get(position).getClub2ScoreId();
+
                         intent = new Intent(ScheduleActivity.this, UpdateScheduleActivity.class);
                         intent.putExtra("userId", userId);
                         intent.putExtra("eventId", eventId);
+                        intent.putExtra("team1ScoreId", team1ScoreId);
+                        intent.putExtra("team2ScoreId", team2ScoreId);
+
                         startActivity(intent);
                     }
                 });
@@ -78,9 +82,19 @@ public class ScheduleActivity extends AppCompatActivity {
                 builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Log.w("Test", "Delete Alert Dialog Clicked!");
+
+                        //get id for a row in Matches and Score table
+                        scheduleId = scheduleList.get(position).getMatchId();
+                        team1ScoreId = scheduleList.get(position).getClub1ScoreId();
+                        team2ScoreId = scheduleList.get(position).getClub2ScoreId();
+
+                        dbManager.deleteMatchesData(scheduleId);
+                        dbManager.deleteScoreData(team1ScoreId);
+                        dbManager.deleteScoreData(team2ScoreId);
+
                         scheduleList.remove(position);
                         scheduleAdapter.notifyDataSetChanged();
-                        //TODO add delete statement to delete data in local db
+                        Toast.makeText(ScheduleActivity.this, "Schedule Deleted!", Toast.LENGTH_SHORT).show();
                     }
                 });
 

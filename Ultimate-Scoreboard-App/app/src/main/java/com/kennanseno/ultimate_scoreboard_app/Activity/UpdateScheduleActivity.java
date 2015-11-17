@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.kennanseno.ultimate_scoreboard_app.Network.DBManager;
 import com.kennanseno.ultimate_scoreboard_app.R;
 
 public class UpdateScheduleActivity extends AppCompatActivity {
@@ -19,7 +21,8 @@ public class UpdateScheduleActivity extends AppCompatActivity {
     EditText team2Score, team2SpiritScore1, team2SpiritScore2, team2SpiritScore3, team2SpiritScore4, team2SpiritScore5;
     Intent intent;
     String userId;
-    int eventId;
+    int eventId, team1ScoreId, team2ScoreId;
+    DBManager dbManager =  new DBManager(UpdateScheduleActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,8 @@ public class UpdateScheduleActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         userId = extras.getString("userId");
         eventId = extras.getInt("eventId");
+        team1ScoreId = extras.getInt("team1ScoreId");
+        team2ScoreId = extras.getInt("team2ScoreId");
 
         team1Score = (EditText)findViewById(R.id.updateMatchTeam1ScoreEditText);
         team1SpiritScore1 = (EditText)findViewById(R.id.updateMatchTeam1SpiritScore1EditText);
@@ -65,7 +70,27 @@ public class UpdateScheduleActivity extends AppCompatActivity {
                 intent = new Intent(UpdateScheduleActivity.this, ScheduleActivity.class);
                 intent.putExtra("userId", userId);
                 intent.putExtra("eventId", eventId);
+                intent.putExtra("team1ScoreId", team1ScoreId);
+                intent.putExtra("team2ScoreId", team2ScoreId);
+
+                int team1NewScore = Integer.parseInt(team1Score.getText().toString());
+                int team1Spirit1= Integer.parseInt(team1SpiritScore1.getText().toString());
+                int team1Spirit2= Integer.parseInt(team1SpiritScore2.getText().toString());
+                int team1Spirit3= Integer.parseInt(team1SpiritScore3.getText().toString());
+                int team1Spirit4= Integer.parseInt(team1SpiritScore4.getText().toString());
+                int team1Spirit5= Integer.parseInt(team1SpiritScore5.getText().toString());
+                dbManager.updateScore(team1ScoreId, team1NewScore, team1Spirit1, team1Spirit2, team1Spirit3, team1Spirit4, team1Spirit5);
+
+                int team2NewScore = Integer.parseInt(team2Score.getText().toString());
+                int team2Spirit1= Integer.parseInt(team2SpiritScore1.getText().toString());
+                int team2Spirit2= Integer.parseInt(team2SpiritScore2.getText().toString());
+                int team2Spirit3= Integer.parseInt(team2SpiritScore3.getText().toString());
+                int team2Spirit4= Integer.parseInt(team2SpiritScore4.getText().toString());
+                int team2Spirit5= Integer.parseInt(team2SpiritScore5.getText().toString());
+                dbManager.updateScore(team2ScoreId, team2NewScore, team2Spirit1, team2Spirit2, team2Spirit3, team2Spirit4, team2Spirit5);
+
                 startActivity(intent);
+                Toast.makeText(UpdateScheduleActivity.this, "Score Updated!", Toast.LENGTH_SHORT).show();
             }
         });
 
